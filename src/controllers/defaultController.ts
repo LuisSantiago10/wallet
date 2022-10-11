@@ -11,17 +11,6 @@ export class DefaultController{
 
     @GET()
     public index(req: Request, res: Response):void{
-        res.send({
-            NODE_ENV : 'process.env.NODE_ENV',
-            APP_ENV : 'process.env.APP_ENV'
-        });
-    }
-
-    @route('test')
-    @GET()
-    public test(req: Request, res: Response):void{
-        res.send(
-            this.testService.get()
-        );
+        res.send('running...');
     }
 }

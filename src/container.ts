@@ -1,7 +1,9 @@
+import express = require('express');
 import { asClass, createContainer } from 'awilix';
-import { TestService } from './services/test.servece';
-import express from "express";
 import { scopePerRequest } from 'awilix-express';
+import { TestService } from './services/test.servece';
+import { SubcriptionService } from "./services/subcription.service";
+import { SubcriptionMySQLRepository } from "./services/repositories/impl/mysql/subcription.repository";
 
 export default ( app: express.Application ) => {
     const container = createContainer({
@@ -9,6 +11,10 @@ export default ( app: express.Application ) => {
     });
 
     container.register({
+        //Repositories
+        subcriptionRepository: asClass(SubcriptionMySQLRepository).scoped(),
+        //Services
+        subscriptionService : asClass(SubcriptionService).scoped(),
         testService: asClass(TestService).scoped()
     });
 

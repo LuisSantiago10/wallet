@@ -25,17 +25,11 @@ export class SubcriptionService {
     }
     public async update(id:number,entry:SubcriptionUpdateDto): Promise<void>{
         let originalEntry = await this.subcriptionRepository.find(id);
-        const newEntry = {...originalEntry}
-        console.log(originalEntry);
-        console.log(newEntry);      
         if (originalEntry){
             originalEntry.code = entry.code;
             originalEntry.amount = entry.amount;
             originalEntry.cron = entry.cron;
-            console.log("----------");
-            
-            console.log(newEntry);
-            // await this.subcriptionRepository.update(originalEntry);
+            await this.subcriptionRepository.update(originalEntry);
         }else{
             throw new ApplicationException('User subcription already exists.');
         }

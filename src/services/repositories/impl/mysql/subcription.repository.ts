@@ -16,7 +16,7 @@ export class SubcriptionMySQLRepository implements SubcriptionRepository{
             [id]
         );
         if(rows.length){
-            return rows as Subcription;
+            return rows[0] as Subcription;
         }else{
             return null;
         }
@@ -45,11 +45,11 @@ export class SubcriptionMySQLRepository implements SubcriptionRepository{
 
     public async update(entry:Subcription): Promise<void>{
         const now = new Date();
-        const { user_id,code,amount,cron,id } = entry;       
-        // await connector.execute(
-        //     'UPDATE wallet_subcription SET user_id = ?, code = ?, amount = ?, update_at = ? WHERE id = ?',
-        //     [user_id,code,amount,cron,now,id]
-        // )
+        const { user_id,code,amount,cron,id } = entry;
+        await connector.execute(
+            'UPDATE wallet_subscription SET user_id = ?, code = ?, amount = ?, cron = ?, updated_at = ? WHERE id = ?',
+            [user_id,code,amount,cron,now,id]
+        )
     }
 
     public async remove(id:number): Promise<void>{
